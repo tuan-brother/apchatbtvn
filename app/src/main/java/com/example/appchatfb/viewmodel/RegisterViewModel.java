@@ -22,22 +22,17 @@ public class RegisterViewModel extends ViewModel {
     // ...
     private MutableLiveData<Boolean> isRegisted = new MutableLiveData<>();
 // Initialize Firebase Auth
-    public MutableLiveData<Boolean> register(String text, String text1, String text2) {
+    public void register(String text, String text1, String text2) {
         mAuth.createUserWithEmailAndPassword(text1, text2)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            isRegisted.setValue(true);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Log.d("BBB", "createUserWithEmail:failure", task.getException());
-                            isRegisted.setValue(false);
-                        }
-
-                        // ..
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "createUserWithEmail:success");
+                        isRegisted.setValue(true);
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.d("BBB", "createUserWithEmail:failure", task.getException());
+                        isRegisted.setValue(false);
                     }
                 });
     }
