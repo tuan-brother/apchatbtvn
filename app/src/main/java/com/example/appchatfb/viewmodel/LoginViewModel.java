@@ -36,12 +36,13 @@ public class LoginViewModel extends ViewModel {
                             // If sign in fails, display a message to the user.
                             Log.d("BBB", "createUserWithEmail:failure", task.getException());
                             check =false;
-                            liveData.setValue(false);
+                            liveData.setValue(true);
                         }
 
                         // ...
                     }
                 });
+
     }
     public void addUser(String name,String email,String pass)
     {
