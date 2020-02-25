@@ -3,6 +3,7 @@ package com.example.appchatfb;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -19,6 +20,7 @@ public class DangNhap extends AppCompatActivity implements ClickDangNhap {
     private ActivityDangNhapBinding binding;
     Boolean checkk;
     MutableLiveData<Boolean> check=new MutableLiveData<>();
+    private boolean noReply = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,17 +34,32 @@ public class DangNhap extends AppCompatActivity implements ClickDangNhap {
         if (binding.etEmail.getText().toString().trim().equals("") && binding.etPass.getText().toString().trim().equals("")) {
             Toast.makeText(this, "Không để trống dữ liệu", Toast.LENGTH_SHORT).show();
         } else {
-            viewModel.checkLogIn(binding.etEmail.getText().toString().trim(), binding.etPass.getText().toString().trim()).observe(this,data->{
-                checkk=data;
+            viewModel.checkLogIn(binding.etEmail.getText().toString().trim(), binding.etPass.getText().toString().trim()).observe(this, new Observer<Boolean>() {
+                @Override
+                public void onChanged(Boolean aBoolean) {
+                    if(aBoolean ){
+                        if(!noReply) {
+                            Log.d("AAA", aBoolean == true ? "ok" : "k");
+                            Toast.makeText(getApplicationContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(DangNhap.this, MainActivity.class);
+                            noReply = true;
+                            startActivity(intent);
+                        }
+                    }else {
+                        Toast.makeText(getApplicationContext(), "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+
             });
-            if (checkk) {
-                Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(DangNhap.this, MainActivity.class);
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
-            }
+
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        noReply=false;
     }
 
     @Override

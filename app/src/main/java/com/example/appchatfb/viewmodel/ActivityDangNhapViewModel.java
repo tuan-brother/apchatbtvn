@@ -4,6 +4,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -13,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ActivityDangNhapViewModel extends ViewModel {
     private FirebaseAuth mAuth;
-    private Boolean check=false;
+    private boolean check;
     final String TAG="AAA";
     final MutableLiveData<Boolean> isLogSuccess=new MutableLiveData<>();
     public MutableLiveData<Boolean> checkLogIn(String email, String password) {
@@ -36,7 +38,6 @@ public class ActivityDangNhapViewModel extends ViewModel {
 
                     }
                 });
-Log.d("AAA",isLogSuccess.getValue()==true?"ok":"f");
         return isLogSuccess;
     }
     public boolean getPass(String email) {

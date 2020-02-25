@@ -2,6 +2,7 @@ package com.example.appchatfb.viewmodel;
 
 import android.util.Log;
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -19,7 +20,7 @@ public class RegisterViewModel extends ViewModel {
     final String TAG="AAA";
     private String anhmd="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ-pHmAircFpVmN3Olp2rYsFc6cONka-nC24AFUPPU99sCdOu7J";
     // ...
-    final MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isRegisted = new MutableLiveData<>();
 // Initialize Firebase Auth
     public MutableLiveData<Boolean> register(String text, String text1, String text2) {
         mAuth.createUserWithEmailAndPassword(text1, text2)
@@ -29,18 +30,22 @@ public class RegisterViewModel extends ViewModel {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            liveData.setValue(true);
+                            isRegisted.setValue(true);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.d("BBB", "createUserWithEmail:failure", task.getException());
-                            liveData.setValue(false);
+                            isRegisted.setValue(false);
                         }
 
-                        // ...
+                        // ..
                     }
                 });
-    return liveData;
     }
+
+    public LiveData<Boolean> isRegisted(){
+        return isRegisted;
+    }
+
     public void addUser(String name,String email,String pass)
     {
         User user=new User(email,pass,name,anhmd,0);
