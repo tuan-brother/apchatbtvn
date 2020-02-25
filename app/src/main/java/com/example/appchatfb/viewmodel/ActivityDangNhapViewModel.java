@@ -3,6 +3,7 @@ package com.example.appchatfb.viewmodel;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -12,9 +13,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ActivityDangNhapViewModel extends ViewModel {
     private FirebaseAuth mAuth;
-    final String TAG="AAA";
     private Boolean check=false;
-    public boolean checkLogIn(String email,String password) {
+    final String TAG="AAA";
+    final MutableLiveData<Boolean> isLogSuccess=new MutableLiveData<>();
+    public MutableLiveData<Boolean> checkLogIn(String email, String password) {
         mAuth=FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -23,18 +25,19 @@ public class ActivityDangNhapViewModel extends ViewModel {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            check=true;
+                            isLogSuccess.setValue(true);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            isLogSuccess.setValue(false);
                         }
 
                         // ...
 
                     }
                 });
-Log.d("AAA",check==true?"ok":"f");
-        return check;
+Log.d("AAA",isLogSuccess.getValue()==true?"ok":"f");
+        return isLogSuccess;
     }
     public boolean getPass(String email) {
         mAuth=FirebaseAuth.getInstance();

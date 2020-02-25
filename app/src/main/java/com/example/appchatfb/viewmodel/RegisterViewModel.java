@@ -13,16 +13,15 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class LoginViewModel extends ViewModel {
+public class RegisterViewModel extends ViewModel {
     private FirebaseAuth mAuth=FirebaseAuth.getInstance();;
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
     final String TAG="AAA";
-    private Boolean check=false;
     private String anhmd="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ-pHmAircFpVmN3Olp2rYsFc6cONka-nC24AFUPPU99sCdOu7J";
     // ...
-    MutableLiveData<Boolean> liveData = new MutableLiveData<>();
+    final MutableLiveData<Boolean> liveData = new MutableLiveData<>();
 // Initialize Firebase Auth
-    public void register(String text, String text1, String text2) {
+    public MutableLiveData<Boolean> register(String text, String text1, String text2) {
         mAuth.createUserWithEmailAndPassword(text1, text2)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -30,19 +29,17 @@ public class LoginViewModel extends ViewModel {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "createUserWithEmail:success");
-                            check =true;
                             liveData.setValue(true);
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.d("BBB", "createUserWithEmail:failure", task.getException());
-                            check =false;
-                            liveData.setValue(true);
+                            liveData.setValue(false);
                         }
 
                         // ...
                     }
                 });
-
+    return liveData;
     }
     public void addUser(String name,String email,String pass)
     {
