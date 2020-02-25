@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="event"
+            type="com.example.appchatfb.interfacefunc.Event" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff9"
+        tools:context=".ActivityForgetPassWord">
+
+        <EditText
+            android:id="@+id/et_getPass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:inputType="textEmailAddress"
+            android:hint="@string/email_dangki"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/et_getPass"
+            app:layout_constraintEnd_toEndOf="@id/et_getPass"
+            app:layout_constraintTop_toBottomOf="@id/et_getPass"
+            android:layout_marginTop="30dp"
+            android:onClick="@{()->event.onClick()}"
+            android:background="#ff09"
+            android:text="@string/get_pass" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

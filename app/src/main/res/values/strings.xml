@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">AppChatFB</string>
+    <string name="tvemail">Email Address</string>
+    <string name="email">Email</string>
+    <string name="tvpass">Password</string>
+    <string name="et_pass">Pass</string>
+    <string name="forgot_password">Forgot Password ?</string>
+    <string name="create_account">Create Account</string>
+    <string name="user_name">User name</string>
+    <string name="email_adress">Email Adress</string>
+    <string name="password">Password</string>
+    <string name="singIN">Sing In</string>
+    <string name="register">Register</string>
+    <string name="email_dangki">Email đăng kí của bạn là gì</string>
+    <string name="get_pass">Get Pass</string>
+</resources>
