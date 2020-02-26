@@ -24,12 +24,16 @@ public class ActivityForgetPassWord extends AppCompatActivity implements Event {
 
     @Override
     public void onClick() {
-        if(viewModel.getPass(binding.etGetPass.getText().toString().trim()))
-        {
-            Toast.makeText(this, "Thông tin đã được gửi về ", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Toast.makeText(this, "Email không chính xác vui lòng nhập lại", Toast.LENGTH_SHORT).show();
-        }
+        viewModel.getPass(binding.etGetPass.getText().toString().trim());
+        viewModel.isGetPass().observe(this,Boll->{
+            if(Boll)
+            {
+                Toast.makeText(this, "Thông tin đã được gửi đi", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(this, "Email không tồn tại vui lòng nhập lại", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

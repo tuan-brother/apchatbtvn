@@ -12,13 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bumptech.glide.Glide;
 import com.example.appchatfb.R;
 import com.example.appchatfb.databinding.FragmentAccSettingBinding;
 import com.example.appchatfb.interfacefunc.AccSettingEvent;
 
-import gun0912.tedimagepicker.builder.TedImagePicker;
-import gun0912.tedimagepicker.builder.listener.OnSelectedListener;
+
 
 /**
  * Open seting acc: change avatar, status ...
@@ -37,12 +35,7 @@ public class AccSettingFragment extends Fragment implements AccSettingEvent {
 
     @Override
     public void changeAvatar() {
-        TedImagePicker.with(getContext()).start(new OnSelectedListener() {
-            @Override
-            public void onSelected(Uri uri) {
-                Glide.with(getActivity()).load(uri).into(binding.imgAvatar);
-            }
-        });
+
     }
 
     @Override

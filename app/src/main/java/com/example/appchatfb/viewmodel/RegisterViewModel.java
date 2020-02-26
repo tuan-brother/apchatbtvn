@@ -22,8 +22,8 @@ public class RegisterViewModel extends ViewModel {
     // ...
     private MutableLiveData<Boolean> isRegisted = new MutableLiveData<>();
 // Initialize Firebase Auth
-    public void register(String text, String text1, String text2) {
-        mAuth.createUserWithEmailAndPassword(text1, text2)
+    public void register(String name, String email, String pass) {
+        mAuth.createUserWithEmailAndPassword(email,pass)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         // Sign in success, update UI with the signed-in user's information

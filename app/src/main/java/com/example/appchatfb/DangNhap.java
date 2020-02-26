@@ -18,7 +18,6 @@ import com.example.appchatfb.viewmodel.ActivityDangNhapViewModel;
 public class DangNhap extends AppCompatActivity implements ClickDangNhap {
     private ActivityDangNhapViewModel viewModel;
     private ActivityDangNhapBinding binding;
-    Boolean checkk;
     MutableLiveData<Boolean> check=new MutableLiveData<>();
     private boolean noReply = false;
     @Override
@@ -42,6 +41,7 @@ public class DangNhap extends AppCompatActivity implements ClickDangNhap {
                             Log.d("AAA", aBoolean == true ? "ok" : "k");
                             Toast.makeText(getApplicationContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(DangNhap.this, MainActivity.class);
+                            intent.putExtra("email",binding.etEmail.getText().toString());
                             noReply = true;
                             startActivity(intent);
                         }
@@ -49,8 +49,6 @@ public class DangNhap extends AppCompatActivity implements ClickDangNhap {
                         Toast.makeText(getApplicationContext(), "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                     }
                 }
-
-
             });
 
         }
