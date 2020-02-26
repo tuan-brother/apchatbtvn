@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:title="Accout Settings"/>
-    <item android:title="All User"/>
-    <item android:title="Log out"/>
+    <item
+        android:id="@+id/acc_setting"
+        android:title="Accout Settings"/>
+    <item
+        android:id="@+id/all_user"
+        android:title="All User"/>
+    <item
+        android:id="@+id/log_out"
+        android:title="Log out"/>
 </menu>
