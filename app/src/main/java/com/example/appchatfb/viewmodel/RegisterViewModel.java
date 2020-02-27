@@ -45,6 +45,6 @@ public class RegisterViewModel extends ViewModel {
     public void addUser(String name,String email,String pass)
     {
         User user=new User(email,pass,name,imageDefault,statusDefault,0);
-        myRef.child("CSDL").child("User").push().setValue(user);
+        myRef.child("CSDL").child("User").child(mAuth.getCurrentUser().getUid()).setValue(user);
     }
 }

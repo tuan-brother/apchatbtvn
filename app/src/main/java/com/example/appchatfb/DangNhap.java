@@ -39,7 +39,6 @@ public class DangNhap extends AppCompatActivity implements ClickDangNhap {
                 public void onChanged(Boolean aBoolean) {
                     if(aBoolean ){
                         if(!noReply) {
-                            Log.d("AAA", aBoolean == true ? "ok" : "k");
                             Toast.makeText(getApplicationContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(DangNhap.this,MainActivity.class);
                             intent.putExtra("email",binding.etEmail.getText().toString());

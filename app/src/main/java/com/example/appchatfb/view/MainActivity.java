@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import com.example.appchatfb.Adapter.ViewPagerAdapter;
 import com.example.appchatfb.R;
 import com.example.appchatfb.viewmodel.AccSettingViewModel;
+import com.example.appchatfb.viewmodel.AllUserViewModel;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.FileNotFoundException;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     private FragmentManager fragmentManager;
     private AccSettingViewModel viewModel;
+    private AllUserViewModel allUserViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         viewModel = new ViewModelProvider(this).get(AccSettingViewModel.class);
         viewModel.setUserFromEmail("nguyendanvn123@gmail.com");
+        allUserViewModel = new ViewModelProvider(this).get(AllUserViewModel.class);
     }
 
     @Override
@@ -82,7 +85,9 @@ public class MainActivity extends AppCompatActivity {
                         .replace(R.id.container,fragment).addToBackStack(null).commit();
                 break;
             case R.id.all_user:
-
+                AllUserFragment allUserFragment = new AllUserFragment();
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.slide_in_up,R.anim.slide_in_down,R.anim.slide_out_down,R.anim.slide_out_up)
+                        .replace(R.id.container,allUserFragment).addToBackStack(null).commit();
                 break;
             case R.id.log_out:
                 finish();

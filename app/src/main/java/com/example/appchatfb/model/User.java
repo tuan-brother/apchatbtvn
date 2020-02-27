@@ -11,6 +11,9 @@ public class User {
     String email,pass,name,anh,status;
     Integer isonline;
 
+    public User() {
+    }
+
     public User(String email, String pass, String name, String anh, String status, Integer isonline) {
         this.email = email;
         this.pass = pass;
