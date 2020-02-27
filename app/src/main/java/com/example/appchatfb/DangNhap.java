@@ -31,7 +31,7 @@ public class DangNhap extends AppCompatActivity implements ClickDangNhap {
 
     @Override
     public void clickDangNhap() {
-        if (binding.etEmail.getText().toString().trim().equals("") && binding.etPass.getText().toString().trim().equals("")) {
+        if (binding.etEmail.getText().toString().trim().equals("") ||binding.etPass.getText().toString().trim().equals("")) {
             Toast.makeText(this, "Không để trống dữ liệu", Toast.LENGTH_SHORT).show();
         } else {
             viewModel.checkLogIn(binding.etEmail.getText().toString().trim(), binding.etPass.getText().toString().trim()).observe(this, new Observer<Boolean>() {
@@ -45,6 +45,7 @@ public class DangNhap extends AppCompatActivity implements ClickDangNhap {
                             intent.putExtra("email",binding.etEmail.getText().toString());
                             noReply = true;
                             startActivity(intent);
+                            binding.etPass.setText("");
                         }
                     }else {
                         Toast.makeText(getApplicationContext(), "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();

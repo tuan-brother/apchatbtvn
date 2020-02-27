@@ -73,8 +73,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
@@ -87,13 +85,10 @@ public class MainActivity extends AppCompatActivity {
 
                 break;
             case R.id.log_out:
+                finish();
                 break;
-
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
 
 }
