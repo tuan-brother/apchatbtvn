@@ -15,8 +15,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ActivityDangNhapViewModel extends ViewModel {
     private FirebaseAuth mAuth;
-    private boolean check;
     final String TAG="AAA";
+    final MutableLiveData<Boolean> isForgetMail=new MutableLiveData<>();
     final MutableLiveData<Boolean> isLogSuccess=new MutableLiveData<>();
     public MutableLiveData<Boolean> checkLogIn(String email, String password) {
         mAuth=FirebaseAuth.getInstance();
@@ -33,14 +33,11 @@ public class ActivityDangNhapViewModel extends ViewModel {
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                             isLogSuccess.setValue(false);
                         }
-
-                        // ...
-
                     }
                 });
         return isLogSuccess;
     }
-    public boolean getPass(String email) {
+    public void getPass(String email) {
         mAuth=FirebaseAuth.getInstance();
         mAuth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -48,13 +45,16 @@ public class ActivityDangNhapViewModel extends ViewModel {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "Email sent.");
-                            check=true;
+                            isForgetMail.setValue(true);
                         }
                         else {
-                            check=false;
+                            isForgetMail.setValue(false);
                         }
                     }
                 });
-        return check;
+    }
+    public LiveData<Boolean> isGetPass()
+    {
+        return isForgetMail;
     }
 }

@@ -32,15 +32,12 @@ public class Register extends AppCompatActivity implements Event {
         }
         else {
             viewModel.register(binding.regisUser.getText().toString().trim(), binding.etEmail.getText().toString().trim(), binding.etPass.getText().toString().trim());
-            viewModel.isRegisted().observe(this, new Observer<Boolean>() {
-                @Override
-                public void onChanged(Boolean aBoolean) {
-                    if(aBoolean){
-                        Toast.makeText(getApplicationContext(), "Đăng kí thành công", Toast.LENGTH_SHORT).show();
-                        viewModel.addUser(binding.regisUser.getText().toString().trim(), binding.etEmail.getText().toString().trim(), binding.etPass.getText().toString().trim());
-                        Intent intent = new Intent(Register.this, DangNhap.class);
-                        startActivity(intent);
-                    }
+            viewModel.isRegisted().observe(this, aBoolean -> {
+                if(aBoolean){
+                    Toast.makeText(getApplicationContext(), "Đăng kí thành công", Toast.LENGTH_SHORT).show();
+                    viewModel.addUser(binding.regisUser.getText().toString().trim(), binding.etEmail.getText().toString().trim(), binding.etPass.getText().toString().trim());
+                    Intent intent = new Intent(Register.this, DangNhap.class);
+                    startActivity(intent);
                 }
             });
 
