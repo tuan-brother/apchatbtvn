@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModel;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.appchatfb.model.User;
 import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,12 +39,12 @@ import java.util.Calendar;
 
 public class AccSettingViewModel extends ViewModel {
     private MutableLiveData<String> avatar = new MutableLiveData<>();
-    private MutableLiveData<Boolean> isOnline = new MutableLiveData<Boolean>(true);
     private MutableLiveData<String> name = new MutableLiveData<>();
     private String email ;
     FirebaseStorage storage = FirebaseStorage.getInstance();
     private DatabaseReference mDatabase;
     private StorageReference mStorage;
+
 
     public LiveData<String> getAvatar() {
         return avatar;
@@ -64,7 +65,8 @@ public class AccSettingViewModel extends ViewModel {
                    if(data.child("email").getValue().toString().equals(email)){
                        avatar.setValue(data.child("anh").getValue().toString());
                        name.setValue(data.child("name").getValue().toString());
-                       isOnline.setValue(data.child("isonline").getValue(Long.class)==0?false:true);
+                       data.getRef().child("isonline").setValue(1);
+                       data.getRef().child("isonline").onDisconnect().setValue(0);
                    }
 
                 }
