@@ -13,4 +13,6 @@
     <string name="register">Register</string>
     <string name="email_dangki">Email đăng kí của bạn là gì</string>
     <string name="get_pass">Get Pass</string>
+    <string name="textanswer">Bạn có đồng ý làm bạn không</string>
+    <string name="deny">Từ chối</string>
 </resources>

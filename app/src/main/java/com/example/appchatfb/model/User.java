@@ -1,15 +1,31 @@
 package com.example.appchatfb.model;
 
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 public class User {
-    String email,pass,name,anh;
+    String email,pass,name,anh,status;
     Integer isonline;
 
-    public User(String email, String pass, String name, String anh, Integer isonline) {
+    public User(String email, String pass, String name, String anh, String status, Integer isonline) {
         this.email = email;
         this.pass = pass;
         this.name = name;
         this.anh = anh;
+        this.status = status;
         this.isonline = isonline;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getEmail() {
@@ -50,5 +66,11 @@ public class User {
 
     public void setIsonline(Integer isonline) {
         this.isonline = isonline;
+    }
+
+    @BindingAdapter("profileImage")
+    public static void loadImage(ImageView view,String uRL)
+    {
+        Glide.with(view.getContext()).load(uRL).apply(new RequestOptions()).circleCrop().into(view);
     }
 }

@@ -18,7 +18,8 @@ public class RegisterViewModel extends ViewModel {
     private FirebaseAuth mAuth=FirebaseAuth.getInstance();;
     DatabaseReference myRef = FirebaseDatabase.getInstance().getReference();
     final String TAG="AAA";
-    private String anhmd="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ-pHmAircFpVmN3Olp2rYsFc6cONka-nC24AFUPPU99sCdOu7J";
+    private String imageDefault="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ-pHmAircFpVmN3Olp2rYsFc6cONka-nC24AFUPPU99sCdOu7J";
+    private String statusDefault="Helo";
     // ...
     private MutableLiveData<Boolean> isRegisted = new MutableLiveData<>();
 // Initialize Firebase Auth
@@ -43,7 +44,7 @@ public class RegisterViewModel extends ViewModel {
 
     public void addUser(String name,String email,String pass)
     {
-        User user=new User(email,pass,name,anhmd,0);
+        User user=new User(email,pass,name,imageDefault,statusDefault,0);
         myRef.child("CSDL").child("User").push().setValue(user);
     }
 }

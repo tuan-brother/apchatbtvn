@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.appchatfb.databinding.ActivityDangNhapBinding;
+import com.example.appchatfb.view.FragmentRequest;
 import com.example.appchatfb.view.MainActivity;
 import com.example.appchatfb.viewmodel.ActivityDangNhapViewModel;
 
@@ -40,7 +41,7 @@ public class DangNhap extends AppCompatActivity implements ClickDangNhap {
                         if(!noReply) {
                             Log.d("AAA", aBoolean == true ? "ok" : "k");
                             Toast.makeText(getApplicationContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(DangNhap.this, MainActivity.class);
+                            Intent intent = new Intent(DangNhap.this,MainActivity.class);
                             intent.putExtra("email",binding.etEmail.getText().toString());
                             noReply = true;
                             startActivity(intent);
