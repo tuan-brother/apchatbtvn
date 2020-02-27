@@ -13,4 +13,7 @@
     <string name="register">Register</string>
     <string name="email_dangki">Email đăng kí của bạn là gì</string>
     <string name="get_pass">Get Pass</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

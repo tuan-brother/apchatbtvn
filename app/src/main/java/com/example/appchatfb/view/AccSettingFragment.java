@@ -54,8 +54,7 @@ public class AccSettingFragment extends Fragment implements AccSettingEvent {
 
     @Override
     public void changeStatus() {
-        ChangeStatusFragment fragment = new ChangeStatusFragment();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, fragment).addToBackStack(null).commit();
+        ChangeStatusFragment dialog = new ChangeStatusFragment();
+        dialog.show(getFragmentManager(),null);
     }
 }
