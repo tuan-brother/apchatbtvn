@@ -23,6 +23,7 @@ import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,38 +39,37 @@ import java.net.URL;
 import java.util.Calendar;
 
 public class AccSettingViewModel extends ViewModel {
-    private MutableLiveData<String> avatar = new MutableLiveData<>();
-    private MutableLiveData<String> name = new MutableLiveData<>();
-    private String email ;
+   private MutableLiveData<User> user = new MutableLiveData<>();
     FirebaseStorage storage = FirebaseStorage.getInstance();
     private DatabaseReference mDatabase;
     private StorageReference mStorage;
+    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private String uid;
 
-
-    public LiveData<String> getAvatar() {
-        return avatar;
+    public LiveData<User> getUser() {
+        return user;
     }
 
-    public LiveData<String> getName() {
-        return name;
+    public AccSettingViewModel() {
+        super();
+        mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                uid = mAuth.getCurrentUser().getUid();
+              setUser();
+            }
+        });
     }
 
-    public void setUserFromEmail(String email) {
-        this.email = email;
+
+
+    public void setUser() {
         mDatabase = FirebaseDatabase.getInstance().getReference("CSDL");
-        mDatabase.child("User").orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabase.child("User").child(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot data:dataSnapshot.getChildren()
-                ) {
-                   if(data.child("email").getValue().toString().equals(email)){
-                       avatar.setValue(data.child("anh").getValue().toString());
-                       name.setValue(data.child("name").getValue().toString());
-                       data.getRef().child("isonline").setValue(1);
-                       data.getRef().child("isonline").onDisconnect().setValue(0);
-                   }
-
-                }
+                user.setValue(dataSnapshot.getValue(User.class));
+                Log.d("ccc",dataSnapshot.getValue(User.class) instanceof User?uid:"s");
             }
 
             @Override
@@ -78,6 +78,7 @@ public class AccSettingViewModel extends ViewModel {
             }
         });
     }
+
 
     public void setAvatar(Bitmap _avatar) {
         mStorage = storage.getReference("avatar");
@@ -101,24 +102,9 @@ public class AccSettingViewModel extends ViewModel {
                 taskSnapshot.getMetadata().getReference().getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        mDatabase.child("User").orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot data:dataSnapshot.getChildren()
-                        ) {
-                            if(data.child("email").getValue().toString().equals(email)){
-                               data.getRef().child("anh").setValue(uri.toString());
-                               avatar.setValue(uri.toString());
-                            }
+                        mDatabase.child("User").child(uid).child("anh").setValue(uri.toString());
 
-                        }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
                     }
                 });
             }

@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -47,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         tlChat.setupWithViewPager(vpChat);
         fragmentManager = getSupportFragmentManager();
         viewModel = new ViewModelProvider(this).get(AccSettingViewModel.class);
-        viewModel.setUserFromEmail("nguyendanvn123@gmail.com");
         allUserViewModel = new ViewModelProvider(this).get(AllUserViewModel.class);
     }
 
@@ -92,13 +92,12 @@ public class MainActivity extends AppCompatActivity {
                         .replace(R.id.container,allUserFragment).addToBackStack(null).commit();
                 break;
             case R.id.log_out:
+
                 break;
 
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
 }
