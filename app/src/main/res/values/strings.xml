@@ -18,4 +18,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="textanswer">Bạn có đồng ý làm bạn không</string>
     <string name="deny">Từ chối</string>
+    <string name="accout_settings">Accout Settings</string>
+    <string name="all_user">All User</string>
+    <string name="log_out">Log out</string>
 </resources>

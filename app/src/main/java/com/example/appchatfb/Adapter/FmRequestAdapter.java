@@ -59,7 +59,7 @@ public class FmRequestAdapter extends RecyclerView.Adapter<FmRequestAdapter.View
 
     @Override
     public int getItemCount() {
-        return userArrayList.size();
+        return userArrayList==null?0:userArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

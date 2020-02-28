@@ -2,11 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/acc_setting"
-        android:title="Accout Settings"/>
+        android:title="@string/accout_settings"/>
     <item
         android:id="@+id/all_user"
-        android:title="All User"/>
+        android:title="@string/all_user"/>
     <item
         android:id="@+id/log_out"
-        android:title="Log out"/>
+        android:title="@string/log_out"/>
 </menu>

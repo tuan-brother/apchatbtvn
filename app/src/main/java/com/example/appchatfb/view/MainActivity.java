@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -47,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
         tlChat.setupWithViewPager(vpChat);
         fragmentManager = getSupportFragmentManager();
         viewModel = new ViewModelProvider(this).get(AccSettingViewModel.class);
-        viewModel.setUserFromEmail("nguyendanvn123@gmail.com");
+        Intent intent=this.getIntent();
+        String mail=intent.getStringExtra("email");
+        viewModel.setUserFromEmail(mail);
         allUserViewModel = new ViewModelProvider(this).get(AllUserViewModel.class);
     }
 
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.acc_setting:
+                Log.d("aaa","item1");
                 AccSettingFragment fragment = new AccSettingFragment();
                 fragmentManager.beginTransaction().setCustomAnimations(R.anim.slide_in_up,R.anim.slide_in_down,R.anim.slide_out_down,R.anim.slide_out_up)
                         .replace(R.id.container,fragment).addToBackStack(null).commit();

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appchatfb.R;
 import com.example.appchatfb.databinding.AllUserItemRowBinding;
+import com.example.appchatfb.interfacefunc.ClickRequest;
 import com.example.appchatfb.model.User;
 
 import java.util.ArrayList;
@@ -17,6 +18,12 @@ import java.util.ArrayList;
 public class AllUserListAdapter extends RecyclerView.Adapter<AllUserListAdapter.ViewHolder> {
     private AllUserItemRowBinding binding;
     private ArrayList<User> users;
+    private ClickRequest Onclick;
+
+    public AllUserListAdapter(ClickRequest onclick) {
+        Onclick = onclick;
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -27,6 +34,14 @@ public class AllUserListAdapter extends RecyclerView.Adapter<AllUserListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.binding.setUser(users.get(position));
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Onclick.itemClickRequest(position);
+                return false;
+            }
+        });
     }
 
     @Override

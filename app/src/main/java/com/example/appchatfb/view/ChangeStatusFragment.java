@@ -21,12 +21,12 @@ import com.example.appchatfb.databinding.FragmentChangeStatusBinding;
 
 
 public class ChangeStatusFragment extends DialogFragment implements View.OnClickListener {
-       private FragmentChangeStatusBinding binding;
+    private FragmentChangeStatusBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentChangeStatusBinding.inflate(inflater,container,false);
+        binding = FragmentChangeStatusBinding.inflate(inflater, container, false);
         binding.statusChangeCancel.setOnClickListener(this);
         binding.statusChangeSave.setOnClickListener(this);
         binding.etStatus.requestFocus();
@@ -34,26 +34,24 @@ public class ChangeStatusFragment extends DialogFragment implements View.OnClick
         return binding.getRoot();
     }
 
-
-    public void showKeyboard(){
+    public void showKeyboard() {
         InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
-    public void closeKeyboard(){
+    public void closeKeyboard() {
         InputMethodManager inputMethodManager = (InputMethodManager) getContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
     }
 
-
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.status_change_cancel:
                 getDialog().dismiss();
                 break;
             case R.id.status_change_save:
-            //todo do something to save user status
+                //todo do something to save user status
                 break;
 
         }
