@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.example.appchatfb.R;
 import com.example.appchatfb.databinding.FragmentAccSettingBinding;
 import com.example.appchatfb.interfacefunc.AccSettingEvent;
+import com.example.appchatfb.model.User;
 import com.example.appchatfb.viewmodel.AccSettingViewModel;
 
 
@@ -34,16 +35,17 @@ public class AccSettingFragment extends Fragment implements AccSettingEvent {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_acc_setting, container, false);
         binding.setEvent(this);
         viewModel = new ViewModelProvider(getActivity()).get(AccSettingViewModel.class);
-        viewModel.getAvatar().observe(getViewLifecycleOwner(), new Observer<String>() {
+        viewModel.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
-            public void onChanged(String s) {
-                Glide.with(getContext()).load(s)
+            public void onChanged(User user) {
+                Glide.with(getContext()).load(user.getAnh())
                         .centerCrop().into(binding.imgAvatar);
             }
         });
-        binding.tvUserName.setText(viewModel.getName().getValue());
+        binding.tvUserName.setText(viewModel.getUser().getValue().getName());
         return binding.getRoot();
     }
+
 
 
     @Override
