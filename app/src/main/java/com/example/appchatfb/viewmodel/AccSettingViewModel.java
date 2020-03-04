@@ -104,7 +104,6 @@ public class AccSettingViewModel extends ViewModel {
                     public void onSuccess(Uri uri) {
                         mDatabase.child("User").child(uid).child("anh").setValue(uri.toString());
 
-
                     }
                 });
             }

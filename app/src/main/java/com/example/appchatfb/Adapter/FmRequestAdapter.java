@@ -1,39 +1,28 @@
 package com.example.appchatfb.Adapter;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.appchatfb.Activity_Feedback_User;
 import com.example.appchatfb.R;
 import com.example.appchatfb.databinding.FragmentItemRequestBinding;
 import com.example.appchatfb.interfacefunc.ClickAddfriend;
-import com.example.appchatfb.interfacefunc.Event;
 import com.example.appchatfb.model.User;
-import com.example.appchatfb.view.FragmentFriend;
 
 import java.util.ArrayList;
 
 public class FmRequestAdapter extends RecyclerView.Adapter<FmRequestAdapter.ViewHolder> {
-    ArrayList<User> userArrayList=new ArrayList<>();
+    ArrayList<User> userArrayList;
     Context context;
-    ClickAddfriend clickAddfriend;
-
-    public FmRequestAdapter(ArrayList<User> userArrayList, Context context,ClickAddfriend itemclick) {
-        this.userArrayList = userArrayList;
+    ClickAddfriend itemClickAddFriend;
+    public FmRequestAdapter(Context context,ClickAddfriend clickAddfriend) {
         this.context = context;
-        this.clickAddfriend=itemclick;
+        this.itemClickAddFriend=clickAddfriend;
     }
 
     @NonNull
@@ -51,7 +40,7 @@ public class FmRequestAdapter extends RecyclerView.Adapter<FmRequestAdapter.View
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                clickAddfriend.clickListener(position);
+                itemClickAddFriend.clickListener(position);
                 return false;
             }
         });
@@ -62,6 +51,10 @@ public class FmRequestAdapter extends RecyclerView.Adapter<FmRequestAdapter.View
         return userArrayList==null?0:userArrayList.size();
     }
 
+    public void setUsers(ArrayList<User> users) {
+        this.userArrayList = users;
+        notifyDataSetChanged();
+    }
     public class ViewHolder extends RecyclerView.ViewHolder {
         FragmentItemRequestBinding itemRequestBinding;
         public ViewHolder(FragmentItemRequestBinding binding) {

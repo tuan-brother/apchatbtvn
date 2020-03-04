@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.renderscript.AllocationAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ import com.example.appchatfb.databinding.FragmentAllUserBinding;
 import com.example.appchatfb.interfacefunc.ClickRequest;
 import com.example.appchatfb.model.User;
 import com.example.appchatfb.viewmodel.AllUserViewModel;
+import com.example.appchatfb.viewmodel.RequestInviteViewModel;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -32,14 +35,16 @@ public class AllUserFragment extends Fragment {
     private FragmentAllUserBinding binding;
     private AllUserListAdapter adapter;
     private ArrayList<User> dataAllUser;
-    private DatabaseReference DataRef=FirebaseDatabase.getInstance().getReference();
-    public static ArrayList<User> userRequest;
+    private FirebaseAuth mAuth;
+    private String userID;
+    RequestInviteViewModel rgViewModel;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAllUserBinding.inflate(inflater, container, false);
-        dataRequest();
+        mAuth = FirebaseAuth.getInstance();
+        rgViewModel = new ViewModelProvider(this).get(RequestInviteViewModel.class);
         //thoat ra neu kich ra ngoai
         //                        listfriend.add(arrayListUser.get(position));
         //                        arrayListUser.remove(position);
@@ -47,7 +52,6 @@ public class AllUserFragment extends Fragment {
         ClickRequest onClickRequest = new ClickRequest() {
             @Override
             public void itemClickRequest(int position) {
-                Toast.makeText(binding.getRoot().getContext(), "" + String.valueOf(position), Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(binding.getRoot().getContext());
                 builder.setTitle("Add friend");
                 builder.setMessage("Bạn có muốn làm bạn không?");
@@ -56,8 +60,9 @@ public class AllUserFragment extends Fragment {
                 builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        userRequest.add(dataAllUser.get(position));
+                        User user = dataAllUser.get(position);
                         dataAllUser.remove(position);
+                        rgViewModel.RequestFriend(user);
                         adapter.notifyDataSetChanged();
                     }
                 });
@@ -78,20 +83,10 @@ public class AllUserFragment extends Fragment {
         viewModel.getUsers().observe(getViewLifecycleOwner(), new Observer<ArrayList<User>>() {
             @Override
             public void onChanged(ArrayList<User> users) {
-                dataAllUser=users;
+                dataAllUser = users;
                 adapter.setUsers(dataAllUser);
             }
         });
         return binding.getRoot();
-    }
-    public void dataRequest()
-    {
-        if(userRequest!=null)
-        {
-
-        }
-        else {
-            userRequest=new ArrayList<>();
-        }
     }
 }

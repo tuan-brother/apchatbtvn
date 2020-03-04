@@ -48,12 +48,6 @@ public class MainActivity extends AppCompatActivity {
         tlChat.setupWithViewPager(vpChat);
         fragmentManager = getSupportFragmentManager();
         viewModel = new ViewModelProvider(this).get(AccSettingViewModel.class);
-<<<<<<< HEAD
-        Intent intent=this.getIntent();
-        String mail=intent.getStringExtra("email");
-        viewModel.setUserFromEmail(mail);
-=======
->>>>>>> 419989629096c63441cffc25cbf8c7ce1f75a057
         allUserViewModel = new ViewModelProvider(this).get(AllUserViewModel.class);
     }
 
@@ -97,18 +91,10 @@ public class MainActivity extends AppCompatActivity {
                         .replace(R.id.container,allUserFragment).addToBackStack(null).commit();
                 break;
             case R.id.log_out:
-<<<<<<< HEAD
                 finish();
-=======
-
->>>>>>> 419989629096c63441cffc25cbf8c7ce1f75a057
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 419989629096c63441cffc25cbf8c7ce1f75a057
 }

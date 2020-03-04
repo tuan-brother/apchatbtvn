@@ -32,11 +32,11 @@ public class FragmentFriend extends Fragment {
         FragmentFriendBinding binding= DataBindingUtil.inflate(inflater,R.layout.fragment_friend,container,false);
         rc_Friend=binding.rcFmFriend;
         linearLayoutManager=new LinearLayoutManager(binding.getRoot().getContext());
-        adapter=new FmFriendAdapter(binding.getRoot().getContext(),FragmentRequest.listfriend);
-        Toast.makeText(binding.getRoot().getContext(),String.valueOf(FragmentRequest.listfriend.size()), Toast.LENGTH_SHORT).show();
-        rc_Friend.setLayoutManager(linearLayoutManager);
-        rc_Friend.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+//        adapter=new FmFriendAdapter(binding.getRoot().getContext());
+//        rc_Friend.setLayoutManager(linearLayoutManager);
+//        rc_Friend.setAdapter(adapter);
+//        adapter.notifyDataSetChanged();
+
         return binding.getRoot();
     }
 }

@@ -40,7 +40,7 @@ public class FmFriendAdapter extends RecyclerView.Adapter<FmFriendAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return users==null?0:users.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
