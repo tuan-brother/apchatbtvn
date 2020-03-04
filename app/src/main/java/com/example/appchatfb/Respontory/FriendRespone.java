@@ -1,9 +1,8 @@
-package com.example.appchatfb.viewmodel;
+package com.example.appchatfb.Respontory;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.appchatfb.model.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,22 +17,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class listFriendViewModel extends ViewModel {
-    DatabaseReference Dataref;
+public class FriendRespone { DatabaseReference Dataref;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     MutableLiveData<ArrayList<User>> dataUser = new MutableLiveData<>();
-    List<String> Friend = new ArrayList<>();
+    List<String> Friend=new ArrayList<>();
     String uId;
 
-    public void getEmailData() {
-        Dataref = FirebaseDatabase.getInstance().getReference();
-        ArrayList<User> requestFriend = new ArrayList<>();
+    public LiveData<ArrayList<User>> getEmailData() {
+        Dataref= FirebaseDatabase.getInstance().getReference();
+        ArrayList<User> requestFriend=new ArrayList<>();
         listFriend();
         Dataref.child("CSDL").child("User").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<User> list = new ArrayList<>();
-                if (Friend != null) {
+                if(Friend!=null) {
                     for (int i = 0; i < Friend.size(); i++) {
                         String s = String.valueOf(Friend.get(i));
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
@@ -51,17 +49,21 @@ public class listFriendViewModel extends ViewModel {
 
             }
         });
+        //Log.d("AAA",String.valueOf(dataUser.getValue().size()));
+        return dataUser;
     }
-
-    public void listFriend() {
+    public void listFriend()
+    {
         uId = mAuth.getCurrentUser().getUid();
         Dataref.child("CSDL").child("User").child(uId).child("friend").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.getValue() == null) {
+                if(dataSnapshot.getValue()==null)
+                {
 
-                } else {
-                    Map<String, String> dt = (HashMap<String, String>) dataSnapshot.getValue();
+                }
+                else {
+                    Map<Long,String> dt=(HashMap<Long, String>)dataSnapshot.getValue();
                     Friend.addAll(dt.values());
                 }
             }
@@ -71,9 +73,5 @@ public class listFriendViewModel extends ViewModel {
 
             }
         });
-    }
-
-    public LiveData<ArrayList<User>> getListFriend() {
-        return dataUser;
     }
 }

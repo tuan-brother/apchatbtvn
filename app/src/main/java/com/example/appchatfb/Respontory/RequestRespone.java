@@ -48,10 +48,8 @@ public class RequestRespone {
                     dataUser.setValue(list);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
         //Log.d("AAA",String.valueOf(dataUser.getValue().size()));

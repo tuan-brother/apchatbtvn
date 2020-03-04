@@ -19,9 +19,8 @@ public class FmFriendAdapter extends RecyclerView.Adapter<FmFriendAdapter.ViewHo
     Context context;
     ArrayList<User> users;
 
-    public FmFriendAdapter(Context context, ArrayList<User> users) {
+    public FmFriendAdapter(Context context) {
         this.context = context;
-        this.users = users;
     }
 
     @NonNull
@@ -43,6 +42,11 @@ public class FmFriendAdapter extends RecyclerView.Adapter<FmFriendAdapter.ViewHo
         return users==null?0:users.size();
     }
 
+    public void setUser(ArrayList<User> listfriend)
+    {
+        this.users=listfriend;
+        notifyDataSetChanged();
+    }
     public class ViewHolder extends RecyclerView.ViewHolder {
         FragmentItemFriendBinding binding;
         public ViewHolder(FragmentItemFriendBinding itemFriendBinding) {
