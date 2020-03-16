@@ -38,6 +38,7 @@ public class AllUserFragment extends Fragment {
     private FirebaseAuth mAuth;
     private String userID;
     RequestInviteViewModel rgViewModel;
+    ClickRequest onClickRequest;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,31 +50,15 @@ public class AllUserFragment extends Fragment {
         //                        listfriend.add(arrayListUser.get(position));
         //                        arrayListUser.remove(position);
         //                        adapter.notifyDataSetChanged();
-        ClickRequest onClickRequest = new ClickRequest() {
+        onClickRequest=new ClickRequest() {
             @Override
             public void itemClickRequest(int position) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(binding.getRoot().getContext());
-                builder.setTitle("Add friend");
-                builder.setMessage("Bạn có muốn làm bạn không?");
-                //thoat ra neu kich ra ngoai
-                builder.setCancelable(true);
-                builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        User user = dataAllUser.get(position);
-                        dataAllUser.remove(position);
-                        rgViewModel.RequestFriend(user);
-                        adapter.notifyDataSetChanged();
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Toast.makeText(binding.getRoot().getContext(), "Cancel", Toast.LENGTH_SHORT).show();
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                rgViewModel.RequestFriend(dataAllUser.get(position));
+                dataAllUser.remove(position);
+                binding.rvContainer.getAdapter().notifyItemRemoved(position);
+                adapter.notifyDataSetChanged();
+                Log.d("ccccc",""+dataAllUser.size());
+                //adapter.notifyItemRemoved(position);
             }
         };
         adapter = new AllUserListAdapter(onClickRequest);

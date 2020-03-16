@@ -23,7 +23,6 @@ public class RequestInviteViewModel extends ViewModel {
     DatabaseReference Dataref = FirebaseDatabase.getInstance().getReference();
     FirebaseAuth mAuth=FirebaseAuth.getInstance();
     String uId;
-    List<String> listRequest=new ArrayList<>();
     public void RequestFriend(User user)
     {
         Calendar time=Calendar.getInstance();
@@ -36,6 +35,7 @@ public class RequestInviteViewModel extends ViewModel {
                        if(data.getValue(User.class).getEmail().equals(user.getEmail()))
                        {
                             Dataref.child("CSDL").child("User").child(key).child("requestfriend").child(String.valueOf(time.getTimeInMillis())).setValue(mAuth.getCurrentUser().getEmail());
+                            return;
                        }
                     }
                 }
@@ -45,30 +45,6 @@ public class RequestInviteViewModel extends ViewModel {
 
                 }
             });
-    }
-    public void addFriend(User user)
-    {
-        uId=mAuth.getCurrentUser().getUid();
-        Calendar time=Calendar.getInstance();
-        Dataref.child("CSDL").child("User").child(uId).child("friend").child(String.valueOf(time.getTimeInMillis())).setValue(user.getEmail());
-        Dataref.child("CSDL").child("User").child(uId).child("requestfriend").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Map<String,String> dt=(HashMap<String,String>)dataSnapshot.getValue();
-                for(String key:dt.keySet())
-                {
-                    if(dt.get(key).equals(user.getEmail()))
-                    {
-                        Dataref.child("CSDL").child("User").child(uId).child("requestfriend").child(key).removeValue();
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
 }

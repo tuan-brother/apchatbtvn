@@ -34,12 +34,10 @@ public class AllUserListAdapter extends RecyclerView.Adapter<AllUserListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.binding.setUser(users.get(position));
-
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.binding.btnAddfriend.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
+            public void onClick(View v) {
                 Onclick.itemClickRequest(position);
-                return false;
             }
         });
     }

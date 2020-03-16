@@ -2,7 +2,6 @@ package com.example.appchatfb;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.widget.Toast;
 
 import com.example.appchatfb.databinding.ActivityRegisterBinding;
 import com.example.appchatfb.interfacefunc.Event;
-import com.example.appchatfb.view.MainActivity;
 import com.example.appchatfb.viewmodel.RegisterViewModel;
 
 public class Register extends AppCompatActivity implements Event {
@@ -36,7 +34,7 @@ public class Register extends AppCompatActivity implements Event {
                 if(aBoolean){
                     Toast.makeText(getApplicationContext(), "Đăng kí thành công", Toast.LENGTH_SHORT).show();
                     viewModel.addUser(binding.regisUser.getText().toString().trim(), binding.etEmail.getText().toString().trim(), binding.etPass.getText().toString().trim());
-                    Intent intent = new Intent(Register.this, DangNhap.class);
+                    Intent intent = new Intent(Register.this, ActivityLogin.class);
                     startActivity(intent);
                 }
             });

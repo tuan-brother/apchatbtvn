@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="user"
+            type="com.example.appchatfb.model.User" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:id="@+id/tb_chatfriend"
+            android:layout_height="wrap_content"
+            android:background="#673AB7">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="30dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/ic_keyboard_backspace_black_24dp" />
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:text="@{user.name}"
+                    android:textColor="#ffff"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="right"
+                    tools:ignore="RtlHardcoded"
+                    app:profileImage="@{user.anh}" />
+            </LinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="9">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rc_fmChat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:weightSum="12">
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="10dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/addbutton"
+                android:textColor="#673AB7"
+                android:textSize="40sp"
+                tools:ignore="NestedWeights" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="10" />
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="10dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/sendbutton" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>
