@@ -8,15 +8,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.example.appchatfb.databinding.ActivityDangNhapBinding;
-import com.example.appchatfb.view.FragmentRequest;
 import com.example.appchatfb.view.MainActivity;
 import com.example.appchatfb.viewmodel.ActivityDangNhapViewModel;
 
-public class DangNhap extends AppCompatActivity implements ClickDangNhap {
+public class ActivityLogin extends AppCompatActivity implements ClickDangNhap {
     private ActivityDangNhapViewModel viewModel;
     private ActivityDangNhapBinding binding;
     MutableLiveData<Boolean> check=new MutableLiveData<>();
@@ -40,7 +38,7 @@ public class DangNhap extends AppCompatActivity implements ClickDangNhap {
                     if(aBoolean ){
                         if(!noReply) {
                             Toast.makeText(getApplicationContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(DangNhap.this,MainActivity.class);
+                            Intent intent = new Intent(ActivityLogin.this,MainActivity.class);
                             noReply = true;
                             startActivity(intent);
                             binding.etPass.setText("");
@@ -62,13 +60,13 @@ public class DangNhap extends AppCompatActivity implements ClickDangNhap {
 
     @Override
     public void chuyenmanhinh() {
-        Intent intent=new Intent(DangNhap.this,Register.class);
+        Intent intent=new Intent(ActivityLogin.this,Register.class);
         startActivity(intent);
     }
 
     @Override
     public void chuyenMHForgetPass() {
-        Intent intent=new Intent(DangNhap.this,ActivityForgetPassWord.class);
+        Intent intent=new Intent(ActivityLogin.this,ActivityForgetPassWord.class);
         startActivity(intent);
     }
 }

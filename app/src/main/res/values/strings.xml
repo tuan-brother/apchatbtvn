@@ -21,4 +21,5 @@
     <string name="accout_settings">Accout Settings</string>
     <string name="all_user">All User</string>
     <string name="log_out">Log out</string>
+    <string name="addfriend">+</string>
 </resources>

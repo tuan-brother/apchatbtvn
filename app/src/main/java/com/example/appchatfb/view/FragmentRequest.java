@@ -40,6 +40,7 @@ public class FragmentRequest extends Fragment {
     FmRequestAdapter adapter;
     FmRequestFriend model;
     String uId;
+    DatabaseReference Dataref = FirebaseDatabase.getInstance().getReference();
     ArrayList<User> list;
     ClickAddfriend onClick;
 
@@ -59,9 +60,8 @@ public class FragmentRequest extends Fragment {
                 builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        model.addFriend(list.get(position));
-                        //model.deleteRequestFriend(list.get(position));
-                        Toast.makeText(binding.getRoot().getContext(), ""+list.get(position).getEmail(), Toast.LENGTH_SHORT).show();
+                        model.addFriend(list.get(position).getEmail());
+                        model.friendly2(list.get(position).getEmail());
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -87,12 +87,6 @@ public class FragmentRequest extends Fragment {
                 adapter.setUsers(users);
             }
         });
-        //model invite
         return binding.getRoot();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
     }
 }
