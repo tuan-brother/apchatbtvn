@@ -39,7 +39,6 @@ public class FragmentRequest extends Fragment {
     LinearLayoutManager linearLayoutManager;
     FmRequestAdapter adapter;
     FmRequestFriend model;
-    RequestInviteViewModel modelInvite;
     String uId;
     ArrayList<User> list;
     ClickAddfriend onClick;
@@ -49,8 +48,6 @@ public class FragmentRequest extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         list=new ArrayList<>();
         FragmentRequestBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_request, container, false);
-        //model invite
-        modelInvite=new ViewModelProvider(this).get(RequestInviteViewModel.class);
         onClick=new ClickAddfriend() {
             @Override
             public void clickListener(int position) {
@@ -62,7 +59,8 @@ public class FragmentRequest extends Fragment {
                 builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        modelInvite.addFriend(list.get(position));
+                        model.addFriend(list.get(position));
+                        //model.deleteRequestFriend(list.get(position));
                         Toast.makeText(binding.getRoot().getContext(), ""+list.get(position).getEmail(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -89,6 +87,7 @@ public class FragmentRequest extends Fragment {
                 adapter.setUsers(users);
             }
         });
+        //model invite
         return binding.getRoot();
     }
 
