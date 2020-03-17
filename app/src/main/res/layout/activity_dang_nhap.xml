@@ -16,6 +16,7 @@
         tools:context=".ActivityLogin">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="324dp"
             android:layout_height="418dp"
             android:background="#ffff"
@@ -119,6 +120,30 @@
                 app:layout_constraintTop_toBottomOf="@+id/et_pass" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
+        <ImageView
+            android:layout_width="109dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="388dp"
+            android:background="@drawable/bogociconlogin"
+            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+            app:layout_constraintStart_toStartOf="@id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="@id/constraintLayout"/>
+        <ImageView
+            android:id="@+id/img_login"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="388dp"
+            app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
+            app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+            app:srcCompat="@android:mipmap/sym_def_app_icon"
+            tools:ignore="MissingConstraints" />
+        <com.scottyab.showhidepasswordedittext.ShowHidePasswordEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/simplePassword"
+            android:hint="Password"
+            tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

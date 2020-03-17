@@ -26,12 +26,6 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <Button
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="30dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/ic_keyboard_backspace_black_24dp" />
                 <TextView
                     android:layout_weight="1"
                     android:layout_width="wrap_content"
@@ -80,14 +74,14 @@
                 tools:ignore="NestedWeights" />
 
             <EditText
-                android:id="@+id/edt_message"
+                android:id="@+id/edt_mess"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="10" />
 
             <Button
-                android:id="@+id/btn_sendmessage"
+                android:id="@+id/btn_sendmess"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="10dp"
                 android:layout_height="40dp"

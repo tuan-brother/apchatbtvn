@@ -57,7 +57,6 @@ public class AllUserFragment extends Fragment {
                 dataAllUser.remove(position);
                 binding.rvContainer.getAdapter().notifyItemRemoved(position);
                 adapter.notifyDataSetChanged();
-                Log.d("ccccc",""+dataAllUser.size());
                 //adapter.notifyItemRemoved(position);
             }
         };
