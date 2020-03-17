@@ -42,6 +42,7 @@ public class FragmentChat extends Fragment {
                 User user=userArrayList.get(position);
                 Intent intent=new Intent(binding.getRoot().getContext(), ActivityChat.class);
                 Bundle bundle=new Bundle();
+                bundle.putString("email",user.getEmail());
                 bundle.putString("name",user.getName());
                 bundle.putString("image",user.getAnh());
                 intent.putExtra("bundle",bundle);
@@ -52,7 +53,6 @@ public class FragmentChat extends Fragment {
         adapter=new FmChatAdapter(getContext(),clickAddfriend);
         binding.rcFmChat.setLayoutManager(linearLayoutManager);
         binding.rcFmChat.setAdapter(adapter);
-
         //viewmodel
         model=new ViewModelProvider(this).get(FmChatViewModel.class);
         model.getData().observe(this, new Observer<ArrayList<User>>() {

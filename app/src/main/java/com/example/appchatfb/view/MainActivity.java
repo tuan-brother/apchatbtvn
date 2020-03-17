@@ -16,12 +16,18 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.appchatfb.Adapter.ViewPagerAdapter;
 import com.example.appchatfb.R;
 import com.example.appchatfb.viewmodel.AccSettingViewModel;
 import com.example.appchatfb.viewmodel.AllUserViewModel;
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -91,7 +97,19 @@ public class MainActivity extends AppCompatActivity {
                         .replace(R.id.container,allUserFragment).addToBackStack(null).commit();
                 break;
             case R.id.log_out:
-                finish();
+                AuthUI.getInstance().signOut(this)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                Toast.makeText(MainActivity.this,
+                                        "You have been signed out.",
+                                        Toast.LENGTH_LONG)
+                                        .show();
+
+                                // Close activity
+                                finish();
+                            }
+                        });
                 break;
         }
         return super.onOptionsItemSelected(item);
