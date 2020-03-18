@@ -1,5 +1,13 @@
 package com.example.appchatfb.model;
 
+import android.text.format.DateFormat;
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
 import java.util.Date;
 
 public class ChatMessage {
@@ -59,5 +67,15 @@ public class ChatMessage {
 
     public void setSender(String sender) {
         this.sender = sender;
+    }
+    @BindingAdapter("profileImage")
+    public static void loadImage(ImageView view, String uRL)
+    {
+        Glide.with(view.getContext()).load(uRL).apply(new RequestOptions()).circleCrop().into(view);
+    }
+    public String fmTime(Long time)
+    {
+        String s=String.valueOf(DateFormat.format("(HH:mm:ss)", time));
+        return s;
     }
 }

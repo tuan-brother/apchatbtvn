@@ -7,6 +7,8 @@ import androidx.databinding.BindingAdapter;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import android.text.format.DateFormat;
+
 public class User {
     String email,pass,name,anh,status;
     Integer isonline;

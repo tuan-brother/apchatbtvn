@@ -18,8 +18,8 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:profileImage="@{data.messageUser}"
-            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginStart="6dp"
             android:layout_marginTop="0dp"
             android:textStyle="normal|bold" />
@@ -27,7 +27,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
             android:text="@{data.fmTime(data.messageTime)}"
             android:id="@+id/message_time" />
 
@@ -35,8 +35,8 @@
             android:id="@+id/message_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="56dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="56dp"
             android:layout_marginTop="5dp"
             android:text="@{data.messageText}"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"

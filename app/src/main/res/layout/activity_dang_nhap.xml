@@ -60,17 +60,22 @@
                 app:layout_constraintStart_toStartOf="@+id/et_email"
                 app:layout_constraintTop_toBottomOf="@id/et_email"
                 tools:layout_editor_absoluteY="93dp" />
-
-            <EditText
-                android:id="@+id/et_pass"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tl_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="20dp"
-                android:hint="@string/et_pass"
+                app:passwordToggleEnabled="true"
                 app:layout_constraintStart_toStartOf="@+id/textView2"
-                app:layout_constraintTop_toBottomOf="@id/textView2" />
-
+                app:layout_constraintTop_toBottomOf="@id/textView2"
+                app:passwordToggleDrawable="@drawable/icon_selector">
+            <EditText
+                android:id="@+id/et_pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
             <Button
                 android:id="@+id/btn_sing_in"
                 android:layout_width="200dp"
@@ -80,10 +85,10 @@
                 android:background="#FF5722"
                 android:onClick="@{()->itemclick.clickDangNhap()}"
                 android:text="@string/singIN"
-                app:layout_constraintEnd_toEndOf="@+id/et_pass"
+                app:layout_constraintEnd_toEndOf="@+id/tl_pass"
                 app:layout_constraintHorizontal_bias="0.475"
-                app:layout_constraintStart_toStartOf="@+id/et_pass"
-                app:layout_constraintTop_toBottomOf="@+id/et_pass" />
+                app:layout_constraintStart_toStartOf="@+id/tl_pass"
+                app:layout_constraintTop_toBottomOf="@+id/tl_pass" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -116,8 +121,8 @@
                 android:background="#ffff"
                 android:onClick="@{()->itemclick.chuyenMHForgetPass()}"
                 android:text="@string/forgot_password"
-                app:layout_constraintEnd_toEndOf="@+id/et_pass"
-                app:layout_constraintTop_toBottomOf="@+id/et_pass" />
+                app:layout_constraintEnd_toEndOf="@+id/tl_pass"
+                app:layout_constraintTop_toBottomOf="@+id/tl_pass" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
         <ImageView
@@ -138,12 +143,6 @@
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="@+id/constraintLayout"
             app:srcCompat="@android:mipmap/sym_def_app_icon"
-            tools:ignore="MissingConstraints" />
-        <com.scottyab.showhidepasswordedittext.ShowHidePasswordEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/simplePassword"
-            android:hint="Password"
             tools:ignore="MissingConstraints" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
