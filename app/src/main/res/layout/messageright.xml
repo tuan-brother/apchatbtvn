@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -8,38 +9,43 @@
             type="com.example.appchatfb.model.ChatMessage" />
     </data>
 
-    <RelativeLayout
-        android:orientation="horizontal"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/image_chat"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:profileImage="@{data.messageUser}"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="0dp"
-            android:textStyle="normal|bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:text="@{data.fmTime(data.messageTime)}"
-            android:id="@+id/message_time" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="right"
+        android:orientation="vertical"
+        tools:ignore="RtlHardcoded">
 
         <TextView
             android:id="@+id/message_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="56dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginEnd="@dimen/space_large"
+            android:layout_marginRight="@dimen/space_large"
+            android:background="@drawable/bogocmessageright"
+            android:paddingLeft="@dimen/space_large"
+            android:paddingRight="@dimen/space_large"
             android:text="@{data.messageText}"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textSize="18sp" />
-    </RelativeLayout>
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="RtlHardcoded"
+            tools:text="abcd" />
+
+        <TextView
+            android:id="@+id/message_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/message_text"
+            android:layout_alignBottom="@id/message_text"
+            android:layout_alignParentEnd="true"
+            android:text="@{data.fmTime(data.messageTime)}"
+            app:layout_constraintEnd_toEndOf="@+id/message_text"
+            app:layout_constraintTop_toBottomOf="@+id/message_text"
+            tools:text="12:20" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

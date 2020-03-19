@@ -1,12 +1,14 @@
 package com.example.appchatfb.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appchatfb.R;
@@ -20,10 +22,11 @@ import java.util.ArrayList;
 
 public class ChatFriendAdapter extends RecyclerView.Adapter<ChatFriendAdapter.HolderView> {
     Context context;
-    private static final int MSG_LEFT=0;
-    private static final int MSG_RIGHT=1;
+    private static final int MSG_LEFT = 0;
+    private static final int MSG_RIGHT = 1;
     FirebaseUser firebaseUser;
     ArrayList<ChatMessage> list = new ArrayList<>();
+    String urlAnh;
 
     public ChatFriendAdapter(Context context) {
         this.context = context;
@@ -33,14 +36,24 @@ public class ChatFriendAdapter extends RecyclerView.Adapter<ChatFriendAdapter.Ho
     @Override
     public ChatFriendAdapter.HolderView onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-            MessageBinding binding = DataBindingUtil.inflate(inflater, R.layout.message, parent, false);
-            return new HolderView(binding);
+        ViewDataBinding binding;
+        if (viewType ==MSG_LEFT) {
+            binding = DataBindingUtil.inflate(inflater, R.layout.messageright, parent, false);
+            return new HolderView((MessagerightBinding) binding);
+        } else {
+            binding = DataBindingUtil.inflate(inflater, R.layout.message, parent, false);
+            return new HolderView((MessageBinding) binding);
+        }
     }
 
     @Override
     public void onBindViewHolder(@NonNull ChatFriendAdapter.HolderView holder, int position) {
         ChatMessage chat = list.get(position);
-        holder.bind(chat);
+        if (holder.getItemViewType() == MSG_LEFT) {
+            holder.bindright(chat);
+        } else {
+            holder.bind(chat,urlAnh);
+        }
     }
 
     @Override
@@ -50,30 +63,40 @@ public class ChatFriendAdapter extends RecyclerView.Adapter<ChatFriendAdapter.Ho
 
     public class HolderView extends RecyclerView.ViewHolder {
         MessageBinding messageBinding;
+        MessagerightBinding messagerightBinding;
 
         public HolderView(MessageBinding binding) {
             super(binding.getRoot());
             this.messageBinding = binding;
         }
 
-        public void bind(ChatMessage chatMessage) {
+        public HolderView(MessagerightBinding binding) {
+            super(binding.getRoot());
+            this.messagerightBinding = binding;
+        }
+
+        public void bind(ChatMessage chatMessage,String url) {
+            messageBinding.setUrlAnh(url);
             messageBinding.setData(chatMessage);
+        }
+
+        public void bindright(ChatMessage chatMessage) {
+            messagerightBinding.setData(chatMessage);
         }
     }
 
-    public void setAdapter(ArrayList<ChatMessage> messageslist) {
+    public void setAdapter(ArrayList<ChatMessage> messageslist,String urAnh) {
         list = messageslist;
+        urlAnh=urAnh;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemViewType(int position) {
-        firebaseUser=FirebaseAuth.getInstance().getCurrentUser();
-        if(list.get(position).getSender().equals(firebaseUser.getEmail()))
-        {
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (list.get(position).getSender().equals(firebaseUser.getEmail())) {
             return MSG_RIGHT;
-        }
-        else {
+        } else {
             return MSG_LEFT;
         }
     }
