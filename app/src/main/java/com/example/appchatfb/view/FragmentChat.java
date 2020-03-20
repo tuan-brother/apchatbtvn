@@ -59,6 +59,7 @@ public class FragmentChat extends Fragment {
             @Override
             public void onChanged(ArrayList<User> users) {
                 userArrayList=users;
+                Toast.makeText(binding.getRoot().getContext(),""+users.size(), Toast.LENGTH_SHORT).show();
                 adapter.setUser(users);
             }
         });

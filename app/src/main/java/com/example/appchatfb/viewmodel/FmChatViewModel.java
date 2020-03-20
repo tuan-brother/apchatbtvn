@@ -14,7 +14,7 @@ public class FmChatViewModel extends ViewModel {
     public LiveData<ArrayList<User>> getData()
     {
         chatRespone=new ChatRespone();
-        this.data=chatRespone.getEmailData();
+        this.data=chatRespone.listUser();
         return data;
     }
 }
