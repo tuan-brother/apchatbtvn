@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
@@ -20,38 +21,32 @@ import android.widget.Toast;
 
 import com.example.appchatfb.Adapter.ViewPagerAdapter;
 import com.example.appchatfb.R;
+import com.example.appchatfb.databinding.ActivityMainBinding;
 import com.example.appchatfb.viewmodel.AccSettingViewModel;
 import com.example.appchatfb.viewmodel.AllUserViewModel;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
-    ViewPager vpChat;
-    TabLayout tlChat;
     ViewPagerAdapter adapter;
-    Toolbar toolbar;
     private FragmentManager fragmentManager;
     private AccSettingViewModel viewModel;
     private AllUserViewModel allUserViewModel;
+    private ActivityMainBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        toolbar=findViewById(R.id.toolbar);
-        toolbar.inflateMenu(R.menu.menusetting);
-        setSupportActionBar(toolbar);
-        vpChat=findViewById(R.id.vp_Chat);
+        binding= DataBindingUtil.setContentView(this,R.layout.activity_main);
+        binding.toolbar.inflateMenu(R.menu.menusetting);
+        setSupportActionBar(binding.toolbar);
         adapter=new ViewPagerAdapter(getSupportFragmentManager());
-        vpChat.setAdapter(adapter);
-        tlChat=findViewById(R.id.tb_Chat);
-        tlChat.setupWithViewPager(vpChat);
+        binding.vpChat.setAdapter(adapter);
+        binding.tbChat.setupWithViewPager(binding.vpChat);
         fragmentManager = getSupportFragmentManager();
         viewModel = new ViewModelProvider(this).get(AccSettingViewModel.class);
         allUserViewModel = new ViewModelProvider(this).get(AllUserViewModel.class);

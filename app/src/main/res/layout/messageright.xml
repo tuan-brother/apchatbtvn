@@ -43,7 +43,7 @@
             android:layout_below="@id/message_text"
             android:layout_alignBottom="@id/message_text"
             android:layout_alignParentEnd="true"
-            android:text="@{data.fmTime(data.messageTime)}"
+            android:text="@{data.fmTime()}"
             app:layout_constraintEnd_toEndOf="@+id/message_text"
             app:layout_constraintTop_toBottomOf="@+id/message_text"
             tools:text="12:20" />

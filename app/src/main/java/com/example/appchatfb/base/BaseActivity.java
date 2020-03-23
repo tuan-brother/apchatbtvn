@@ -6,5 +6,6 @@ import androidx.viewbinding.ViewBinding;
 
 public abstract class BaseActivity<VM extends ViewModel, binding extends ViewBinding> extends ActivityCompat {
     VM viewModel;
+    binding binding;
 
 }

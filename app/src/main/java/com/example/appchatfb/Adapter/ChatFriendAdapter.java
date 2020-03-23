@@ -24,9 +24,10 @@ public class ChatFriendAdapter extends RecyclerView.Adapter<ChatFriendAdapter.Ho
     Context context;
     private static final int MSG_LEFT = 0;
     private static final int MSG_RIGHT = 1;
-    FirebaseUser firebaseUser;
+    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
     ArrayList<ChatMessage> list = new ArrayList<>();
     String urlAnh;
+    String lastMessage;
 
     public ChatFriendAdapter(Context context) {
         this.context = context;
@@ -93,11 +94,15 @@ public class ChatFriendAdapter extends RecyclerView.Adapter<ChatFriendAdapter.Ho
 
     @Override
     public int getItemViewType(int position) {
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         if (list.get(position).getSender().equals(firebaseUser.getEmail())) {
             return MSG_RIGHT;
         } else {
             return MSG_LEFT;
         }
+    }
+
+    public void theLastMessage()
+    {
+
     }
 }

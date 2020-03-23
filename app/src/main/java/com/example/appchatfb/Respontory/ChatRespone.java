@@ -15,7 +15,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 public class ChatRespone {
     DatabaseReference Dataref = FirebaseDatabase.getInstance().getReference();
@@ -26,7 +25,7 @@ public class ChatRespone {
     ArrayList<User> listTotal;
     String uID = mAuth.getCurrentUser().getEmail();
 
-    public LiveData<ArrayList<User>> getEmailData() {
+  /*  public LiveData<ArrayList<User>> getEmailData() {
         Dataref = FirebaseDatabase.getInstance().getReference();
         Dataref.child("CSDL").child("User").addValueEventListener(new ValueEventListener() {
             @Override
@@ -58,7 +57,7 @@ public class ChatRespone {
             }
         });
         return dataUser;
-    }
+    }*/
 //    public void listFriend()
 //    {
 //        uId = mAuth.getCurrentUser().getUid();
@@ -118,16 +117,13 @@ public class ChatRespone {
                     User user = data.getValue(User.class);
                     for (String email : listEmail) {
                         if (user.getEmail().equals(email)) {
-                            ListIterator<User> itr = list.listIterator();
-                            if (itr.hasNext()) {
-                                while (itr.hasNext()) {
-                                    User user1 = itr.next();
-                                    if (!user.getEmail().equals(user1.getEmail())) {
-                                        itr.add(user);
-                                    }
-                                }
+                            if (list.size()!=0) {
+                               if(!sameCheck(user.getEmail()))
+                               {
+                                   list.add(user);
+                               }
                             } else {
-                                itr.add(user);
+                                list.add(user);
                             }
                         }
                     }
@@ -139,5 +135,18 @@ public class ChatRespone {
 
             }
         });
+    }
+    public boolean sameCheck(String email)
+    {
+        boolean isSame=false;
+        for(User user:list)
+        {
+            if(user.getEmail().equals(email))
+            {
+                isSame=true;
+                break;
+            }
+        }
+        return isSame;
     }
 }

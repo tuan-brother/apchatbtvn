@@ -73,8 +73,8 @@ public class ChatMessage {
     {
         Glide.with(view.getContext()).load(uRL).apply(new RequestOptions()).circleCrop().into(view);
     }
-    public String fmTime(Long time) {
-        String s=String.valueOf(DateFormat.format("(HH:mm:ss)", time));
+    public String fmTime() {
+        String s=String.valueOf(DateFormat.format("(HH:mm:ss)", messageTime));
         return s;
     }
 }

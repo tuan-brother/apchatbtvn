@@ -25,7 +25,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivityChat"></activity>
+        <service
+            android:name=".ServiceMessage"
+            android:enabled="false"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name=".ActivityChat" />
         <activity android:name=".Activity_Feedback_User" />
         <activity android:name=".ActivityForgetPassWord" />
         <activity android:name=".Register" />

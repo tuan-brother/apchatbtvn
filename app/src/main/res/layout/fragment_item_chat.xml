@@ -35,11 +35,10 @@
                 android:background="#CDDC39" />
 
             <TextView
-                android:id="@+id/tv_messegerequest"
+                android:id="@+id/tv_lastMessage"
                 android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:background="#FFC107"
-                android:text="@{user.email}"
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>

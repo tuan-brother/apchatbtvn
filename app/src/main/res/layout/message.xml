@@ -55,7 +55,7 @@
                 android:textSize="10sp"
                 android:layout_below="@id/message_text"
                 android:layout_alignParentStart="true"
-                android:text="@{data.fmTime(data.messageTime)}"
+                android:text="@{data.fmTime()}"
                 tools:ignore="SmallSp" />
 
         </RelativeLayout>
