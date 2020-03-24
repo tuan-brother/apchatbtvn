@@ -29,12 +29,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 
 public class AllUserFragment extends Fragment {
     private FragmentAllUserBinding binding;
     private AllUserListAdapter adapter;
     private ArrayList<User> dataAllUser;
+    private ListIterator<User> alluse;
     private FirebaseAuth mAuth;
     private String userID;
     RequestInviteViewModel rgViewModel;
@@ -46,15 +48,13 @@ public class AllUserFragment extends Fragment {
         binding = FragmentAllUserBinding.inflate(inflater, container, false);
         mAuth = FirebaseAuth.getInstance();
         rgViewModel = new ViewModelProvider(this).get(RequestInviteViewModel.class);
-        //thoat ra neu kich ra ngoai
-        //                        listfriend.add(arrayListUser.get(position));
-        //                        arrayListUser.remove(position);
-        //                        adapter.notifyDataSetChanged();
-        onClickRequest=new ClickRequest() {
+        onClickRequest = new ClickRequest() {
             @Override
             public void itemClickRequest(int position) {
                 rgViewModel.RequestFriend(dataAllUser.get(position));
-                dataAllUser.remove(position);
+                alluse = dataAllUser.listIterator();
+                User user = alluse.next();
+                alluse.remove();
                 binding.rvContainer.getAdapter().notifyItemRemoved(position);
                 adapter.notifyDataSetChanged();
                 //adapter.notifyItemRemoved(position);

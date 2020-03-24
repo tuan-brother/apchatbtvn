@@ -47,21 +47,23 @@ public class FragmentRequest extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        list=new ArrayList<>();
+        list = new ArrayList<>();
         FragmentRequestBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_request, container, false);
-        onClick=new ClickAddfriend() {
+        onClick = new ClickAddfriend() {
             @Override
             public void clickListener(int position) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(binding.getRoot().getContext());
                 builder.setTitle("Add friend");
-                builder.setMessage("Bạn Có Muốn làm bạn với người này không?");
+                builder.setMessage("Bạn Có muốn làm bạn với người này không?");
                 //thoat ra neu kich ra ngoai
                 builder.setCancelable(true);
                 builder.setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(binding.getRoot().getContext(), "Kết bạn thành công", Toast.LENGTH_SHORT).show();
                         model.addFriend(list.get(position).getEmail());
                         model.friendly2(list.get(position).getEmail());
+                        list.remove(position);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -75,18 +77,16 @@ public class FragmentRequest extends Fragment {
             }
         };
         linearLayoutManager = new LinearLayoutManager(binding.getRoot().getContext());
-        adapter = new FmRequestAdapter(binding.getRoot().getContext(),onClick);
+        adapter = new FmRequestAdapter(binding.getRoot().getContext(), onClick);
         binding.rcFmRequest.setLayoutManager(linearLayoutManager);
         binding.rcFmRequest.setAdapter(adapter);
         //model requestfriend
         model = new ViewModelProvider(this).get(FmRequestFriend.class);
-        model.getData().observe(getViewLifecycleOwner(), new Observer<ArrayList<User>>() {
-            @Override
-            public void onChanged(ArrayList<User> users) {
-                list=users;
-                adapter.setUsers(users);
-            }
+        model.getData().observe(getViewLifecycleOwner(), data -> {
+            list = data;
+            adapter.setUsers(list);
         });
+
         return binding.getRoot();
     }
 }

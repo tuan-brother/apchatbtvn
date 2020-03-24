@@ -25,17 +25,17 @@ public class RequestRespone {
     DatabaseReference Dataref;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     MutableLiveData<ArrayList<User>> dataUser = new MutableLiveData<>();
-    List<String> Friend=new ArrayList<>();
+    List<String> Friend = new ArrayList<>();
     String uId;
 
     public LiveData<ArrayList<User>> getEmailData() {
-        Dataref= FirebaseDatabase.getInstance().getReference();
+        Dataref = FirebaseDatabase.getInstance().getReference();
         listFriend();
         Dataref.child("CSDL").child("User").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<User> list = new ArrayList<>();
-                if(Friend!=null) {
+                if (Friend != null) {
                     for (int i = 0; i < Friend.size(); i++) {
                         String s = String.valueOf(Friend.get(i));
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
@@ -47,6 +47,7 @@ public class RequestRespone {
                     dataUser.setValue(list);
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
@@ -55,20 +56,18 @@ public class RequestRespone {
         //Log.d("AAA",String.valueOf(dataUser.getValue().size()));
         return dataUser;
     }
-    public void listFriend()
-    {
+
+    public void listFriend() {
         uId = mAuth.getCurrentUser().getUid();
         Dataref.child("CSDL").child("User").child(uId).child("requestfriend").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-               if(dataSnapshot.getValue()==null)
-               {
+                if (dataSnapshot.getValue() == null) {
 
-               }
-               else {
-                   Map<Long,String> dt=(HashMap<Long, String>)dataSnapshot.getValue();
-                   Friend.addAll(dt.values());
-               }
+                } else {
+                    Map<Long, String> dt = (HashMap<Long, String>) dataSnapshot.getValue();
+                    Friend.addAll(dt.values());
+                }
             }
 
             @Override

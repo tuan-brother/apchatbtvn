@@ -27,18 +27,17 @@ public class FmRequestFriend extends ViewModel {
     private RequestRespone respone;
     private LiveData<ArrayList<User>> listUser;
     DatabaseReference Dataref = FirebaseDatabase.getInstance().getReference();
-    FirebaseAuth mAuth=FirebaseAuth.getInstance();
-    String uId=mAuth.getCurrentUser().getUid();
-    public LiveData<ArrayList<User>> getData()
-    {
-        respone=new RequestRespone();
-        this.listUser=respone.getEmailData();
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    String uId = mAuth.getCurrentUser().getUid();
+
+    public LiveData<ArrayList<User>> getData() {
+        respone = new RequestRespone();
+        this.listUser = respone.getEmailData();
         return listUser;
     }
 
-    public void addFriend(String email)
-    {
-        Calendar time=Calendar.getInstance();
+    public void addFriend(String email) {
+        Calendar time = Calendar.getInstance();
         Dataref.child("CSDL").child("User").child(uId).child("friend").child(String.valueOf(time.getTimeInMillis())).setValue(email).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -47,17 +46,14 @@ public class FmRequestFriend extends ViewModel {
         });
     }
 
-    public void friendly2(String email)
-    {
-        Calendar timeer=Calendar.getInstance();
+    public void friendly2(String email) {
+        Calendar timeer = Calendar.getInstance();
         Dataref.child("CSDL").child("User").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot data:dataSnapshot.getChildren())
-                {
-                    String key=data.getKey();
-                    if(data.child("email").getValue().equals(email))
-                    {
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    String key = data.getKey();
+                    if (data.child("email").getValue().equals(email)) {
                         Dataref.child("CSDL").child("User").child(key).child("friend").child(String.valueOf(timeer.getTimeInMillis())).setValue(mAuth.getCurrentUser().getEmail());
                     }
                 }

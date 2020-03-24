@@ -18,11 +18,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.appchatfb.ActivityChat;
 import com.example.appchatfb.Adapter.FmChatAdapter;
+import com.example.appchatfb.Notification.Token;
 import com.example.appchatfb.R;
 import com.example.appchatfb.databinding.FragmentChatBinding;
 import com.example.appchatfb.interfacefunc.ClickAddfriend;
 import com.example.appchatfb.model.User;
 import com.example.appchatfb.viewmodel.FmChatViewModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 
@@ -30,6 +36,7 @@ public class FragmentChat extends Fragment {
     ArrayList<User> userArrayList=new ArrayList<>();
     FmChatAdapter adapter;
     LinearLayoutManager linearLayoutManager;
+    FirebaseAuth mAuth= FirebaseAuth.getInstance();
     FmChatViewModel model;
     ClickAddfriend clickAddfriend;
     @Nullable
@@ -55,7 +62,7 @@ public class FragmentChat extends Fragment {
         binding.rcFmChat.setAdapter(adapter);
         //viewmodel
         model=new ViewModelProvider(this).get(FmChatViewModel.class);
-        model.getData().observe(this, new Observer<ArrayList<User>>() {
+        model.getData().observe(getViewLifecycleOwner(), new Observer<ArrayList<User>>() {
             @Override
             public void onChanged(ArrayList<User> users) {
                 userArrayList=users;
@@ -63,6 +70,13 @@ public class FragmentChat extends Fragment {
                 adapter.setUser(users);
             }
         });
+        updateToken(FirebaseInstanceId.getInstance().getToken());
         return binding.getRoot();
+    }
+    public void updateToken(String token)
+    {
+        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token1=new Token(token);
+        reference.child(mAuth.getCurrentUser().getUid());
     }
 }

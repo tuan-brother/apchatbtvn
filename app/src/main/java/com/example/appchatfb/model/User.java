@@ -10,13 +10,13 @@ import com.bumptech.glide.request.RequestOptions;
 import android.text.format.DateFormat;
 
 public class User {
-    String email,pass,name,anh,status;
-    Integer isonline;
+    String email, pass, name, anh, status;
+    String isonline;
 
     public User() {
     }
 
-    public User(String email, String pass, String name, String anh, String status, Integer isonline) {
+    public User(String email, String pass, String name, String anh, String status, String isonline) {
         this.email = email;
         this.pass = pass;
         this.name = name;
@@ -65,17 +65,16 @@ public class User {
         this.anh = anh;
     }
 
-        public Integer getIsonline() {
+    public String getIsonline() {
         return isonline;
     }
 
-    public void setIsonline(Integer isonline) {
+    public void setIsonline(String isonline) {
         this.isonline = isonline;
     }
 
     @BindingAdapter("profileImage")
-    public static void loadImage(ImageView view,String uRL)
-    {
+    public static void loadImage(ImageView view, String uRL) {
         Glide.with(view.getContext()).load(uRL).apply(new RequestOptions()).circleCrop().into(view);
     }
 }

@@ -13,11 +13,14 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.appchatfb.Adapter.ChatFriendAdapter;
+import com.example.appchatfb.Notification.Token;
+import com.example.appchatfb.base.BaseActivity;
 import com.example.appchatfb.databinding.ActivityChatBinding;
 import com.example.appchatfb.model.ChatMessage;
 import com.example.appchatfb.model.User;
 import com.example.appchatfb.viewmodel.ActivityChatViewModel;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,12 +28,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ActivityChat extends AppCompatActivity {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     ActivityChatViewModel viewModel;
     LinearLayoutManager manager;
+    DatabaseReference mRef=FirebaseDatabase.getInstance().getReference();
+    FirebaseUser mUser=FirebaseAuth.getInstance().getCurrentUser();
     ChatFriendAdapter adapter;
     User user;
     ArrayList<ChatMessage> listchat;
@@ -40,7 +46,7 @@ public class ActivityChat extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
+        binding=DataBindingUtil.setContentView(this,R.layout.activity_chat);
         setSupportActionBar(binding.tbChatfriend);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         binding.tbChatfriend.setNavigationOnClickListener(new View.OnClickListener() {
@@ -78,7 +84,7 @@ public class ActivityChat extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        viewModel = new ViewModelProvider(this).get(ActivityChatViewModel.class);
+        viewModel=new ViewModelProvider(this).get(ActivityChatViewModel.class);
         viewModel.dataChat(user.getEmail()).observe(this, new Observer<ArrayList<ChatMessage>>() {
             @Override
             public void onChanged(ArrayList<ChatMessage> chatMessages) {
@@ -88,12 +94,24 @@ public class ActivityChat extends AppCompatActivity {
             }
         });
     }
-
     public boolean isVisible()
     {
         LinearLayoutManager linearLayoutManager=(LinearLayoutManager)binding.rcFmChat.getLayoutManager();
         int isEndLayout=linearLayoutManager.findLastCompletelyVisibleItemPosition();
         int itemcout=binding.rcFmChat.getAdapter().getItemCount();
         return (isEndLayout>=itemcout);
+    }
+    private void status(String status)
+    {
+        mRef.child("CSDL").child("User").child(mUser.getUid());
+        HashMap<String,Object> map=new HashMap<>();
+        map.put("isonline",status);
+        mRef.child("CSDL").child("User").child(mUser.getUid()).updateChildren(map);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        status("online");
     }
 }

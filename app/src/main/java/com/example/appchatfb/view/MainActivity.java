@@ -28,9 +28,14 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
     ViewPagerAdapter adapter;
@@ -38,13 +43,16 @@ public class MainActivity extends AppCompatActivity {
     private AccSettingViewModel viewModel;
     private AllUserViewModel allUserViewModel;
     private ActivityMainBinding binding;
+    DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
+    FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding= DataBindingUtil.setContentView(this,R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding.toolbar.inflateMenu(R.menu.menusetting);
         setSupportActionBar(binding.toolbar);
-        adapter=new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
         binding.vpChat.setAdapter(adapter);
         binding.tbChat.setupWithViewPager(binding.vpChat);
         fragmentManager = getSupportFragmentManager();
@@ -54,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menusetting,menu);
+        getMenuInflater().inflate(R.menu.menusetting, menu);
         return true;
     }
 
@@ -65,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
             Bundle extras = data.getExtras();
             Bitmap img = (Bitmap) extras.get("data");
             viewModel.setAvatar(img);
-        }else if(requestCode==122 && resultCode == RESULT_OK){
+        } else if (requestCode == 122 && resultCode == RESULT_OK) {
             try {
                 Uri uri = data.getData();
                 InputStream stream = getContentResolver().openInputStream(uri);
-                Bitmap img  = BitmapFactory.decodeStream(stream);
+                Bitmap img = BitmapFactory.decodeStream(stream);
                 viewModel.setAvatar(img);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
@@ -79,17 +87,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.acc_setting:
-                Log.d("aaa","item1");
+                Log.d("aaa", "item1");
                 AccSettingFragment fragment = new AccSettingFragment();
-                fragmentManager.beginTransaction().setCustomAnimations(R.anim.slide_in_up,R.anim.slide_in_down,R.anim.slide_out_down,R.anim.slide_out_up)
-                        .replace(R.id.container,fragment).addToBackStack(null).commit();
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.slide_in_up, R.anim.slide_in_down, R.anim.slide_out_down, R.anim.slide_out_up)
+                        .replace(R.id.container, fragment).addToBackStack(null).commit();
                 break;
             case R.id.all_user:
                 AllUserFragment allUserFragment = new AllUserFragment();
-                fragmentManager.beginTransaction().setCustomAnimations(R.anim.slide_in_up,R.anim.slide_in_down,R.anim.slide_out_down,R.anim.slide_out_up)
-                        .replace(R.id.container,allUserFragment).addToBackStack(null).commit();
+                fragmentManager.beginTransaction().setCustomAnimations(R.anim.slide_in_up, R.anim.slide_in_down, R.anim.slide_out_down, R.anim.slide_out_up)
+                        .replace(R.id.container, allUserFragment).addToBackStack(null).commit();
                 break;
             case R.id.log_out:
                 AuthUI.getInstance().signOut(this)
@@ -110,4 +118,22 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void status(String status) {
+        mRef.child("CSDL").child("User").child(mUser.getUid());
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("isonline", status);
+        mRef.child("CSDL").child("User").child(mUser.getUid()).updateChildren(map);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        status("online");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        status("offline");
+    }
 }
