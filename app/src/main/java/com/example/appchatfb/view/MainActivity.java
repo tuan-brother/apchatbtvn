@@ -9,10 +9,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager.widget.ViewPager;
 
+import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -32,6 +36,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -43,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private AccSettingViewModel viewModel;
     private AllUserViewModel allUserViewModel;
     private ActivityMainBinding binding;
+    private static final String TAG = "MainActivity";
     DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
     FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -89,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.acc_setting:
-                Log.d("aaa", "item1");
                 AccSettingFragment fragment = new AccSettingFragment();
                 fragmentManager.beginTransaction().setCustomAnimations(R.anim.slide_in_up, R.anim.slide_in_down, R.anim.slide_out_down, R.anim.slide_out_up)
                         .replace(R.id.container, fragment).addToBackStack(null).commit();

@@ -22,4 +22,7 @@
     <string name="all_user">All User</string>
     <string name="log_out">Log out</string>
     <string name="addfriend">+</string>
+    <string name="default_notification_channel_id">channelid</string>
+    <string name="default_notification_channel_name">channelnam</string>
+    <string name="msg_token_fmt">messagetoken</string>
 </resources>
