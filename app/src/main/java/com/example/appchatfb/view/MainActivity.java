@@ -23,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.example.appchatfb.ActivityLogin;
 import com.example.appchatfb.Adapter.ViewPagerAdapter;
 import com.example.appchatfb.R;
 import com.example.appchatfb.databinding.ActivityMainBinding;
@@ -110,12 +111,7 @@ public class MainActivity extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
-                                Toast.makeText(MainActivity.this,
-                                        "You have been signed out.",
-                                        Toast.LENGTH_LONG)
-                                        .show();
-
-                                // Close activity
+                                startActivity(new Intent(MainActivity.this, ActivityLogin.class));
                                 finish();
                             }
                         });
@@ -140,6 +136,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        status("offline");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
         status("offline");
     }
 }

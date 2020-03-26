@@ -9,13 +9,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.appchatfb.Adapter.ChatFriendAdapter;
+import com.example.appchatfb.Notification.Client;
 import com.example.appchatfb.Notification.Token;
 import com.example.appchatfb.base.BaseActivity;
 import com.example.appchatfb.databinding.ActivityChatBinding;
+import com.example.appchatfb.interfacefunc.APISerVice;
 import com.example.appchatfb.model.ChatMessage;
 import com.example.appchatfb.model.User;
 import com.example.appchatfb.viewmodel.ActivityChatViewModel;
@@ -35,20 +39,22 @@ public class ActivityChat extends AppCompatActivity {
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
     ActivityChatViewModel viewModel;
     LinearLayoutManager manager;
-    DatabaseReference mRef=FirebaseDatabase.getInstance().getReference();
-    FirebaseUser mUser=FirebaseAuth.getInstance().getCurrentUser();
+    DatabaseReference mRef = FirebaseDatabase.getInstance().getReference();
+    FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
     ChatFriendAdapter adapter;
     User user;
     ArrayList<ChatMessage> listchat;
     Bundle bundle;
     ActivityChatBinding binding;
+    APISerVice apiSerVice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=DataBindingUtil.setContentView(this,R.layout.activity_chat);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
         setSupportActionBar(binding.tbChatfriend);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        apiSerVice = Client.getClient(" https://fcm.googleapis.com/").create(APISerVice.class);
         binding.tbChatfriend.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +63,7 @@ public class ActivityChat extends AppCompatActivity {
         });
         //getIntent du lieu
         bundle = getIntent().getBundleExtra("bundle");
-        user= new User(bundle.getString("email"), null, bundle.getString("name"), bundle.getString("image"), null, null);
+        user = new User(bundle.getString("email"), null, bundle.getString("name"), bundle.getString("image"), null, null, bundle.getString("typing"));
         binding.setUser(user);
         binding.btnSendmess.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +81,27 @@ public class ActivityChat extends AppCompatActivity {
                 }
             }
         });
-        manager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        binding.edtMess.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().trim().length() == 0) {
+                    typingstatus("noOne");
+                } else {
+                    typingstatus(user.getEmail());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         adapter = new ChatFriendAdapter(binding.getRoot().getContext());
         binding.rcFmChat.setLayoutManager(manager);
         binding.rcFmChat.setAdapter(adapter);
@@ -84,7 +110,7 @@ public class ActivityChat extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        viewModel=new ViewModelProvider(this).get(ActivityChatViewModel.class);
+        viewModel = new ViewModelProvider(this).get(ActivityChatViewModel.class);
         viewModel.dataChat(user.getEmail()).observe(this, new Observer<ArrayList<ChatMessage>>() {
             @Override
             public void onChanged(ArrayList<ChatMessage> chatMessages) {
@@ -94,24 +120,71 @@ public class ActivityChat extends AppCompatActivity {
             }
         });
     }
-    public boolean isVisible()
-    {
-        LinearLayoutManager linearLayoutManager=(LinearLayoutManager)binding.rcFmChat.getLayoutManager();
-        int isEndLayout=linearLayoutManager.findLastCompletelyVisibleItemPosition();
-        int itemcout=binding.rcFmChat.getAdapter().getItemCount();
-        return (isEndLayout>=itemcout);
-    }
-    private void status(String status)
-    {
+
+    private void status(String status) {
         mRef.child("CSDL").child("User").child(mUser.getUid());
-        HashMap<String,Object> map=new HashMap<>();
-        map.put("isonline",status);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("isonline", status);
         mRef.child("CSDL").child("User").child(mUser.getUid()).updateChildren(map);
+    }
+
+    private void typingstatus(String typing) {
+        mRef.child("CSDL").child("User").child(mUser.getUid());
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("typing", typing);
+        mRef.child("CSDL").child("User").child(mUser.getUid()).updateChildren(hashMap);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         status("online");
+        checktyping(user.getEmail());
+        checkfriendonline(user.getEmail());
+    }
+
+    public void checktyping(String email) {
+        mRef.child("CSDL").child("User").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    User user = dataSnapshot1.getValue(User.class);
+                    if (user.getEmail().equals(email)) {
+                        if (!user.getTyping().equals("noOne")) {
+                            binding.typing.setText("...Đang nhập tin nhắn");
+                        } else {
+                            binding.typing.setText("");
+                        }
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public void checkfriendonline(String email)
+    {
+        mRef.child("CSDL").child("User").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    User user = dataSnapshot1.getValue(User.class);
+                    if (user.getEmail().equals(email)) {
+
+                        binding.onlineok.setText(user.getIsonline());
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

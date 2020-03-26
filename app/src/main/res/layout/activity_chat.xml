@@ -10,58 +10,97 @@
             type="com.example.appchatfb.model.User" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="10">
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/tb_chatfriend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#673AB7">
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:background="#673AB7"
+            tools:ignore="MissingConstraints">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:layout_height="match_parent">
 
                 <TextView
+                    android:id="@+id/tv_namechat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="1dp"
                     android:text="@{user.name}"
-                    android:textColor="#ffff" />
+                    android:textColor="#ffff"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toEndOf="@+id/circleImageView"
+                    app:layout_constraintTop_toTopOf="@+id/circleImageView"
+                    tools:text="aaaa" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ic_online"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="3dp"
+                    android:background="#4CAF50"
+                    app:layout_constraintStart_toStartOf="@+id/tv_namechat"
+                    app:layout_constraintTop_toBottomOf="@id/tv_namechat" />
+
+                <TextView
+                    android:id="@+id/onlineok"
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="5dp"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="@id/ic_online"
+                    app:layout_constraintStart_toEndOf="@id/ic_online"
+                    tools:ignore="SmallSp"
+                    tools:text="onllll" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circleImageView"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_gravity="right"
-                    android:layout_weight="1"
+                    android:layout_marginStart="4dp"
                     app:profileImage="@{user.anh}"
-                    tools:ignore="RtlHardcoded" />
-            </LinearLayout>
+                    tools:ignore="RtlHardcoded"
+                    tools:layout_editor_absoluteY="2dp" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="9">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rc_fmChat"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rc_fmChat"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="55dp"
+            android:layout_marginBottom="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/lledtchat"
+            app:layout_constraintTop_toBottomOf="@id/tb_chatfriend"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <TextView
+            android:id="@+id/typing"
+            android:layout_width="wrap_content"
+            android:layout_height="15dp"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@id/rc_fmChat"
+            app:layout_constraintTop_toBottomOf="@id/rc_fmChat" />
 
         <LinearLayout
+            android:id="@+id/lledtchat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_marginTop="15sp"
             android:orientation="horizontal"
-            android:weightSum="12">
+            android:weightSum="12"
+            app:layout_constraintTop_toBottomOf="@id/rc_fmChat">
 
             <Button
                 style="?android:attr/borderlessButtonStyle"
@@ -90,5 +129,5 @@
                 android:layout_weight="1"
                 android:background="@drawable/sendbutton" />
         </LinearLayout>
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -47,6 +47,7 @@ public class FmFriendAdapter extends RecyclerView.Adapter<FmFriendAdapter.ViewHo
                 bundle.putString("name",user.getName());
                 bundle.putString("image",user.getAnh());
                 bundle.putString("email",user.getEmail());
+                bundle.putString("typing",user.getTyping());
                 intent.putExtra("bundle",bundle);
                 context.startActivity(intent);
             }

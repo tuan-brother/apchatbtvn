@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.os.CountDownTimer;
 import android.renderscript.AllocationAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,7 +39,7 @@ public class AllUserFragment extends Fragment {
     private ArrayList<User> dataAllUser;
     private ListIterator<User> alluse;
     private FirebaseAuth mAuth;
-    private String userID;
+    CountDownTimer countDownTimer;
     RequestInviteViewModel rgViewModel;
     ClickRequest onClickRequest;
 
@@ -51,13 +52,8 @@ public class AllUserFragment extends Fragment {
         onClickRequest = new ClickRequest() {
             @Override
             public void itemClickRequest(int position) {
+                Toast.makeText(binding.getRoot().getContext(), "Đã gửi lời mời kết bạn!!", Toast.LENGTH_SHORT).show();
                 rgViewModel.RequestFriend(dataAllUser.get(position));
-                alluse = dataAllUser.listIterator();
-                User user = alluse.next();
-                alluse.remove();
-                binding.rvContainer.getAdapter().notifyItemRemoved(position);
-                adapter.notifyDataSetChanged();
-                //adapter.notifyItemRemoved(position);
             }
         };
         adapter = new AllUserListAdapter(onClickRequest);

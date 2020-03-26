@@ -11,18 +11,19 @@ import android.text.format.DateFormat;
 
 public class User {
     String email, pass, name, anh, status;
-    String isonline;
+    String isonline,typing;
 
     public User() {
     }
 
-    public User(String email, String pass, String name, String anh, String status, String isonline) {
+    public User(String email, String pass, String name, String anh, String status, String isonline,String typing) {
         this.email = email;
         this.pass = pass;
         this.name = name;
         this.anh = anh;
         this.status = status;
         this.isonline = isonline;
+        this.typing=typing;
     }
 
     public String getStatus() {
@@ -71,6 +72,14 @@ public class User {
 
     public void setIsonline(String isonline) {
         this.isonline = isonline;
+    }
+
+    public String getTyping() {
+        return typing;
+    }
+
+    public void setTyping(String typing) {
+        this.typing = typing;
     }
 
     @BindingAdapter("profileImage")

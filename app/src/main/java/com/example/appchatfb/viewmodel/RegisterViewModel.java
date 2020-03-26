@@ -44,7 +44,7 @@ public class RegisterViewModel extends ViewModel {
 
     public void addUser(String name,String email,String pass)
     {
-        User user=new User(email,pass,name,imageDefault,statusDefault,"offline");
+        User user=new User(email,pass,name,imageDefault,statusDefault,"offline","noOne");
         myRef.child("CSDL").child("User").child(mAuth.getCurrentUser().getUid()).setValue(user);
     }
 }
